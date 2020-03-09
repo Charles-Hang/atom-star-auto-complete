@@ -1,7 +1,7 @@
 const classRegex = /class=["|']([\w- ]*$)/;
 const classNameRegex = /className=["|']([\w- ]*$)/;
 const extendRegex = /@extend ([\w-.]*$)/;
-const composesRegex = /composes ([\w- ]*$)/;
+const composesRegex = /composes: ([\w- ]*$)/;
 
 const jsPatterns = [
     {
