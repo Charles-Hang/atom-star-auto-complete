@@ -1,6 +1,5 @@
 const classRegex = /class=["|']([\w- ]*$)/;
 const classNameRegex = /className=["|']([\w- ]*$)/;
-const extendRegex = /@extend ([\w-.]*$)/;
 const composesRegex = /composes: ([\w- ]*$)/;
 
 const jsPatterns = [
@@ -17,7 +16,6 @@ const jsPatterns = [
 const config: Array<{
     extension: string;
     patterns: Array<{
-        prefix?: string;
         regex: RegExp;
         splitChar: string;
     }>
@@ -52,16 +50,6 @@ const config: Array<{
         patterns: [
             {
                 regex: composesRegex,
-                splitChar: ' '
-            }
-        ]
-    },
-    {
-        extension: 'scss',
-        patterns: [
-            {
-                prefix: '.',
-                regex: extendRegex,
                 splitChar: ' '
             }
         ]

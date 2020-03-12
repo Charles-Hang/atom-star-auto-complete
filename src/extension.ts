@@ -14,7 +14,7 @@ export function activate(context: ExtensionContext) {
 	config.forEach(({ extension, patterns }) => {
 		curExtension = extension;
 
-		patterns.forEach(({ prefix = '', regex, splitChar }) => {
+		patterns.forEach(({ regex, splitChar }) => {
 			const disposable = languages.registerCompletionItemProvider(
 				curExtension,
 				{
@@ -29,7 +29,7 @@ export function activate(context: ExtensionContext) {
 
 						const classesInCurrentLine = rawClasses[1].split(splitChar);
 						const completionItems = classes.map(className => {
-							return new CompletionItem(`${prefix}${className}`, CompletionItemKind.Variable);
+							return new CompletionItem(className, CompletionItemKind.Variable);
 						});
 
 						for (const classInCurrentLine of classesInCurrentLine) {
