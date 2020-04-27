@@ -4,19 +4,15 @@ import { languages, Range, Position, CompletionItem, CompletionItemKind, Extensi
 import config from './config';
 import classes from './classes';
 
-const triggerCharacters = ['"', "'", ' ', '.'];
+const triggerCharacters = ['"', "'", ' ', '`'];
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
-	let curExtension = '';
-
 	config.forEach(({ extension, patterns }) => {
-		curExtension = extension;
-
 		patterns.forEach(({ regex, splitChar }) => {
 			const disposable = languages.registerCompletionItemProvider(
-				curExtension,
+				extension,
 				{
 					provideCompletionItems: (document, position) => {
 						const range = new Range(new Position(position.line, 0), position);

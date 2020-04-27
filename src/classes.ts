@@ -1,8 +1,9 @@
 const classes = [
     'hidden',
+    'block',
     'inline-block',
     'inline',
-    'verflow-auto',
+    'overflow-auto',
     'overflow-hidden',
     'overflow-visible',
     'overflow-scroll',
