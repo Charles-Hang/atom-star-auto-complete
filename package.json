@@ -2,7 +2,7 @@
 	"name": "ria-css-autocomplete-vscode",
 	"displayName": "ria css autocomplete vscode",
 	"description": "ria css autocomplete",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"engines": {
 		"vscode": "^1.42.0"
 	},
