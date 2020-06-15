@@ -20,6 +20,23 @@
 		"onLanguage:css",
 		"onLanguage:scss"
 	],
+	"contributes": {
+		"configuration": {
+			"title": "Ria css autocomplete",
+			"properties": {
+				"riacss.config": {
+					"type": "string",
+					"default": "riacss.config.js",
+					"description": "riacss的配置文件名"
+				},
+				"riacss.includes": {
+					"type": "string",
+					"default": "",
+					"description": "需要额外加入补全提示的css类名，逗号分隔"
+				}
+			}
+		}
+	},
 	"main": "./out/extension.js",
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

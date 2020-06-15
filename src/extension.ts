@@ -1,14 +1,21 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { languages, Range, Position, CompletionItem, CompletionItemKind, ExtensionContext } from 'vscode';
+import { languages, Range, Position, CompletionItem, CompletionItemKind, ExtensionContext, workspace } from 'vscode';
+import configurationWatcher, { Classes } from './configurationWatcher';
 import config from './config';
 import classes from './classes';
 
 const triggerCharacters = ['"', "'", ' ', '`'];
+let fclasses: Classes = [];
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
+
+	configurationWatcher((classes) => {
+		fclasses = classes;
+	});
+
 	config.forEach(({ extension, patterns }) => {
 		patterns.forEach(({ regex, splitChar }) => {
 			const disposable = languages.registerCompletionItemProvider(
@@ -24,8 +31,8 @@ export function activate(context: ExtensionContext) {
 						}
 
 						const classesInCurrentLine = rawClasses[1].split(splitChar);
-						const completionItems = classes.map(className => {
-							return new CompletionItem(className, CompletionItemKind.Variable);
+						const completionItems = fclasses.map(item => {
+							return new CompletionItem(item.name, CompletionItemKind.Variable);
 						});
 
 						for (const classInCurrentLine of classesInCurrentLine) {
