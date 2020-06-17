@@ -1,22 +1,22 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { languages, Range, Position, CompletionItem, CompletionItemKind, ExtensionContext, workspace } from 'vscode';
-import configurationWatcher, { Classes } from './configurationWatcher';
-import config from './config';
-import classes from './classes';
+import { languages, Range, Position, CompletionItem, CompletionItemKind, ExtensionContext } from 'vscode';
+import configurationWatcher from './configurationWatcher';
+import completionConfig from './completionConfig';
+import { Classes } from './riacss/generateClasses';
 
 const triggerCharacters = ['"', "'", ' ', '`'];
-let fclasses: Classes = [];
+let classes: Classes = [];
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
 
-	configurationWatcher((classes) => {
-		fclasses = classes;
+	configurationWatcher((resClasses) => {
+		classes = resClasses;
 	});
 
-	config.forEach(({ extension, patterns }) => {
+	completionConfig.forEach(({ extension, patterns }) => {
 		patterns.forEach(({ regex, splitChar }) => {
 			const disposable = languages.registerCompletionItemProvider(
 				extension,
@@ -31,8 +31,11 @@ export function activate(context: ExtensionContext) {
 						}
 
 						const classesInCurrentLine = rawClasses[1].split(splitChar);
-						const completionItems = fclasses.map(item => {
-							return new CompletionItem(item.name, CompletionItemKind.Variable);
+						const completionItems = classes.map(item => {
+							const completionItem = new CompletionItem(item.name, CompletionItemKind.Variable);
+							completionItem.detail = item.variants;
+
+							return completionItem;
 						});
 
 						for (const classInCurrentLine of classesInCurrentLine) {

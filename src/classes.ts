@@ -1,3 +1,5 @@
+// 已废弃。通过配置文件动态生成类名
+
 const classes = [
     'hidden',
     'block',

@@ -1,6 +1,7 @@
 const classRegex = /class=["|']([\w- ]*$)/;
 const classNameRegex = /className=(?:"|'|{`(?:\$\{.*\}\s?)*|{.*['"])([\w- ]*$)/;
 const composesRegex = /composes: ([\w- ]*$)/;
+const applyRegex = /@apply ([\w- ]*$)/;
 
 const jsPatterns = [
     {
@@ -13,7 +14,7 @@ const jsPatterns = [
     }
 ];
 
-const config: Array<{
+const completionConfig: Array<{
     extension: string;
     patterns: Array<{
         regex: RegExp;
@@ -51,9 +52,22 @@ const config: Array<{
             {
                 regex: composesRegex,
                 splitChar: ' '
+            },
+            {
+                regex: applyRegex,
+                splitChar: ' '
+            }
+        ]
+    },
+    {
+        extension: 'scss',
+        patterns: [
+            {
+                regex: applyRegex,
+                splitChar: ' '
             }
         ]
     }
 ];
 
-export default config;
+export default completionConfig;

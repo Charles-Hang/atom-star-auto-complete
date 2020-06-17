@@ -1,18 +1,22 @@
 import getRiacssConfig from '../utils/getRiacssConfig';
 import defaultConfig from './defaultConfig';
+import resolveConfig from './resolveConfig';
+import generateFromResolvedConfig from './generateFromResolvedConfig';
 
-export default async function generateClasses(configFilename?: string) {
+export type Classes = Array<{ name: string; variants?: string }>;
+
+const defaultResolvedConfig = resolveConfig([defaultConfig]);
+
+export default async function generateClasses(configFilePath?: string) {
     let riacssConfig: any;
 
-    if (configFilename) {
-        riacssConfig = await getRiacssConfig(configFilename);
+    if (configFilePath) {
+        riacssConfig = await getRiacssConfig(configFilePath);
     }
 
     if (!riacssConfig) {
-        riacssConfig = defaultConfig;
+        return generateFromResolvedConfig(defaultResolvedConfig);
     }
 
-    // ...
-
-    return [];
+    return generateFromResolvedConfig(resolveConfig([defaultConfig, riacssConfig]));
 }
