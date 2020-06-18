@@ -70,5 +70,5 @@ function generateIncludesClasses(includes?: string): Classes {
         return [];
     }
 
-    return includes.split(',').map(item => ({ name: item.trim() }));
+    return includes.split(',').map(item => item.trim());
 }

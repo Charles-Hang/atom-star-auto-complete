@@ -87,47 +87,20 @@ function resolveConfigStyle(configs, theme) {
     }), {});
 }
 
-function resolveConfigVariants(configs) {
-    const roughConfig = configs.reduce((merged, c) => ({
-        ...merged,
-        ...c,
-    }), {});
-
-    if (Array.isArray(roughConfig.variants)) {
-        return roughConfig.variants;
-    }
-
-    return configs
-        .map((c) => get(c, 'variants', {}))
-        .reduce((merged, v) => ({
-            ...merged,
-            ...v,
-        }), {});
-}
-
 export type ResolvedConfig = ReturnType<typeof resolveConfig>;
 
 // 来自于postcss-tiger-ria插件中的相同方法，返回略作调整
 export default function resolveConfig(configs: any[]) {
     const theme = resolveConfigTheme(configs);
     const style = resolveConfigStyle(configs, theme);
-    const variants = resolveConfigVariants(configs);
     const config = Object.assign({}, ...configs, {
         theme,
         style,
-        variants,
     });
     const getConfigValue = (path: string, defaultValue?) => get(config, path, defaultValue);
 
     return {
         config: getConfigValue,
         style: (path: string, defaultValue?) => getConfigValue(`style.${path}`, defaultValue),
-        variants: (path: string, defaultValue?) => {
-            if (Array.isArray(config.variants)) {
-                return config.variants;
-            }
-
-            return getConfigValue(`variants.${path}`, defaultValue);
-        },
     };
 }

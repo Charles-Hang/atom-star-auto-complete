@@ -32,10 +32,7 @@ export function activate(context: ExtensionContext) {
 
 						const classesInCurrentLine = rawClasses[1].split(splitChar);
 						const completionItems = classes.map(item => {
-							const completionItem = new CompletionItem(item.name, CompletionItemKind.Variable);
-							completionItem.detail = item.variants;
-
-							return completionItem;
+							return new CompletionItem(item, CompletionItemKind.Variable);
 						});
 
 						for (const classInCurrentLine of classesInCurrentLine) {

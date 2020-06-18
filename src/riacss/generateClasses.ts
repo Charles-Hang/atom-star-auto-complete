@@ -3,7 +3,7 @@ import defaultConfig from './defaultConfig';
 import resolveConfig from './resolveConfig';
 import generateFromResolvedConfig from './generateFromResolvedConfig';
 
-export type Classes = Array<{ name: string; variants?: string }>;
+export type Classes = string[];
 
 const defaultResolvedConfig = resolveConfig([defaultConfig]);
 

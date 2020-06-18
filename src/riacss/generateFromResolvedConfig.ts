@@ -6,273 +6,122 @@ type ResolvedConfig = import('./resolveConfig').ResolvedConfig;
 type Classes = import('./generateClasses').Classes;
 
 export default function(resolvedConfig: ResolvedConfig): Classes {
-    const { style, variants } = resolvedConfig;
+    const { style } = resolvedConfig;
 
-    const displayVariants = variants('display')?.toString();
-    const display = map(style('display'), (value, key) => ({
-        name: className('', key, 'display'),
-        variants: displayVariants
-    }));
+    const display = map(style('display'), (value, key) => className('', key, 'display'));
 
-    const overflowVariants = variants('overflow')?.toString();
     const overflow = flatMap(style('overflow'), (value, key) => [
-        { name: className('overflow', key, 'overflow'), variants: overflowVariants },
-        { name: className('overflow-x', key, 'overflow'), variants: overflowVariants },
-        { name: className('overflow-y', key, 'overflow'), variants: overflowVariants },
+        className('overflow', key, 'overflow'),
+        className('overflow-x', key, 'overflow'),
+        className('overflow-y', key, 'overflow'),
     ]);
 
-    const positionVariants = variants('position')?.toString();
-    const position = map(style('position'), (value, key) => ({
-        name: className('', key, 'position'),
-        variants: positionVariants
-    }));
+    const position = map(style('position'), (value, key) => className('', key, 'position'));
 
-    const positionSpacingVariants = variants('positionSpacing')?.toString();
     const positionSpacing = flatMap(style('positionSpacing'), (value, key) => [
-        { name: className('top', key, 'positionSpacing'), variants: positionSpacingVariants },
-        { name: className('right', key, 'positionSpacing'), variants: positionSpacingVariants },
-        { name: className('bottom', key, 'positionSpacing'), variants: positionSpacingVariants },
-        { name: className('left', key, 'positionSpacing'), variants: positionSpacingVariants },
+        className('top', key, 'positionSpacing'),
+        className('right', key, 'positionSpacing'),
+        className('bottom', key, 'positionSpacing'),
+        className('left', key, 'positionSpacing'),
     ]);
 
-    const visibilityVariants = variants('visibility')?.toString();
-    const visibility = map(style('visibility'), (value, key) => ({
-        name: className('', key, 'visibility'),
-        variants: visibilityVariants
-    }));
+    const visibility = map(style('visibility'), (value, key) => className('', key, 'visibility'));
 
-    const zIndexVariants = variants('zIndex')?.toString();
-    const zIndex = map(style('zIndex'), (value, key) => ({
-        name: className('z', key, 'zIndex'),
-        variants: zIndexVariants
-    }));
+    const zIndex = map(style('zIndex'), (value, key) => className('z', key, 'zIndex'));
 
-    const flexVariants = variants('flex')?.toString();
-    const flex = map(style('flex'), (value, key) => ({
-        name: className('flex', key, 'flex'),
-        variants: flexVariants
-    }));
+    const flex = map(style('flex'), (value, key) => className('flex', key, 'flex'));
 
-    const flexDirectionVariants = variants('flexDirection')?.toString();
-    const flexDirection = map(style('flexDirection'), (value, key) => ({
-        name: className('flex', key, 'flexDirection'),
-        variants: flexDirectionVariants
-    }));
+    const flexDirection = map(style('flexDirection'), (value, key) => className('flex', key, 'flexDirection'));
 
-    const flexWrapVariants = variants('flexWrap')?.toString();
-    const flexWrap = map(style('flexWrap'), (value, key) => ({
-        name: className('flex', key, 'flexWrap'),
-        variants: flexWrapVariants
-    }));
+    const flexWrap = map(style('flexWrap'), (value, key) => className('flex', key, 'flexWrap'));
 
-    const flexShrinkVariants = variants('flexShrink')?.toString();
-    const flexShrink = map(style('flexShrink'), (value, key) => ({
-        name: className('flex-shrink', key, 'flexShrink'),
-        variants: flexShrinkVariants
-    }));
+    const flexShrink = map(style('flexShrink'), (value, key) => className('flex-shrink', key, 'flexShrink'));
 
-    const flexGrowVariants = variants('flexGrow')?.toString();
-    const flexGrow = map(style('flexGrow'), (value, key) => ({
-        name: className('flex-grow', key, 'flexGrow'),
-        variants: flexGrowVariants
-    }));
+    const flexGrow = map(style('flexGrow'), (value, key) => className('flex-grow', key, 'flexGrow'));
 
-    const alignItemsVariants = variants('alignItems')?.toString();
-    const alignItems = map(style('alignItems'), (value, key) => ({
-        name: className('items', key, 'alignItems'),
-        variants: alignItemsVariants
-    }));
+    const alignItems = map(style('alignItems'), (value, key) => className('items', key, 'alignItems'));
 
-    const alignContentVariants = variants('alignContent')?.toString();
-    const alignContent = map(style('alignContent'), (value, key) => ({
-        name: className('content', key, 'alignContent'),
-        variants: alignContentVariants
-    }));
+    const alignContent = map(style('alignContent'), (value, key) => className('content', key, 'alignContent'));
 
-    const justifyContentVariants = variants('justifyContent')?.toString();
-    const justifyContent = map(style('justifyContent'), (value, key) => ({
-        name: className('justify', key, 'justifyContent'),
-        variants: justifyContentVariants
-    }));
+    const justifyContent = map(style('justifyContent'), (value, key) => className('justify', key, 'justifyContent'));
 
-    const alignSelfVariants = variants('alignSelf')?.toString();
-    const alignSelf = map(style('alignSelf'), (value, key) => ({
-        name: className('self', key, 'alignSelf'),
-        variants: alignSelfVariants
-    }));
+    const alignSelf = map(style('alignSelf'), (value, key) => className('self', key, 'alignSelf'));
 
-    const orderVariants = variants('order')?.toString();
-    const order = map(style('order'), (value, key) => ({
-        name: className('order', key, 'order'),
-        variants: orderVariants
-    }));
+    const order = map(style('order'), (value, key) => className('order', key, 'order'));
 
-    const marginVariants = variants('margin')?.toString();
     const margin = flatMap(style('margin'), (value, key) => [
-        { name: className('m', key, 'margin'), variants: marginVariants },
-        { name: className('mx', key, 'margin'), variants: marginVariants },
-        { name: className('my', key, 'margin'), variants: marginVariants },
-        { name: className('mt', key, 'margin'), variants: marginVariants },
-        { name: className('mr', key, 'margin'), variants: marginVariants },
-        { name: className('mb', key, 'margin'), variants: marginVariants },
-        { name: className('ml', key, 'margin'), variants: marginVariants },
+        className('m', key, 'margin'),
+        className('mx', key, 'margin'),
+        className('my', key, 'margin'),
+        className('mt', key, 'margin'),
+        className('mr', key, 'margin'),
+        className('mb', key, 'margin'),
+        className('ml', key, 'margin'),
     ]);
 
-    const paddingVariants = variants('padding')?.toString();
     const padding = flatMap(style('padding'), (value, key) => [
-        { name: className('p', key, 'padding'), variants: paddingVariants },
-        { name: className('px', key, 'padding'), variants: paddingVariants },
-        { name: className('py', key, 'padding'), variants: paddingVariants },
-        { name: className('pt', key, 'padding'), variants: paddingVariants },
-        { name: className('pr', key, 'padding'), variants: paddingVariants },
-        { name: className('pb', key, 'padding'), variants: paddingVariants },
-        { name: className('pl', key, 'padding'), variants: paddingVariants },
+        className('p', key, 'padding'),
+        className('px', key, 'padding'),
+        className('py', key, 'padding'),
+        className('pt', key, 'padding'),
+        className('pr', key, 'padding'),
+        className('pb', key, 'padding'),
+        className('pl', key, 'padding'),
     ]);
 
-    const widthVariants = variants('width')?.toString();
-    const width = map(style('width'), (value, key) => ({
-        name: className('w', key, 'width'),
-        variants: widthVariants
-    }));
+    const width = map(style('width'), (value, key) => className('w', key, 'width'));
 
-    const heightVariants = variants('height')?.toString();
-    const height = map(style('height'), (value, key) => ({
-        name: className('h', key, 'height'),
-        variants: heightVariants
-    }));
+    const height = map(style('height'), (value, key) => className('h', key, 'height'));
 
-    const fontSizeVariants = variants('fontSize')?.toString();
-    const fontSize = map(style('fontSize'), (value, key) => ({
-        name: className('font', key, 'fontSize'),
-        variants: fontSizeVariants
-    }));
+    const fontSize = map(style('fontSize'), (value, key) => className('font', key, 'fontSize'));
 
-    const fontWeightVariants = variants('fontWeight')?.toString();
-    const fontWeight = map(style('fontWeight'), (value, key) => ({
-        name: className('font', key, 'fontWeight'),
-        variants: fontWeightVariants
-    }));
+    const fontWeight = map(style('fontWeight'), (value, key) => className('font', key, 'fontWeight'));
 
-    const lineHeightVariants = variants('lineHeight')?.toString();
-    const lineHeight = map(style('lineHeight'), (value, key) => ({
-        name: className('leading', key, 'lineHeight'),
-        variants: lineHeightVariants
-    }));
+    const lineHeight = map(style('lineHeight'), (value, key) => className('leading', key, 'lineHeight'));
 
-    const textAlignVariants = variants('textAlign')?.toString();
-    const textAlign = map(style('textAlign'), (value, key) => ({
-        name: className('text', key, 'textAlign'),
-        variants: textAlignVariants
-    }));
+    const textAlign = map(style('textAlign'), (value, key) => className('text', key, 'textAlign'));
 
-    const verticalAlignVariants = variants('verticalAlign')?.toString();
-    const verticalAlign = map(style('verticalAlign'), (value, key) => ({
-        name: className('align', key, 'verticalAlign'),
-        variants: verticalAlignVariants
-    }));
+    const verticalAlign = map(style('verticalAlign'), (value, key) => className('align', key, 'verticalAlign'));
 
-    const whitespaceVariants = variants('whitespace')?.toString();
-    const whitespace = map(style('whitespace'), (value, key) => ({
-        name: className('whitespace', key, 'whitespace'),
-        variants: whitespaceVariants
-    }));
+    const whitespace = map(style('whitespace'), (value, key) => className('whitespace', key, 'whitespace'));
 
-    const overflowWrapVariants = variants('overflowWrap')?.toString();
-    const overflowWrap = map(style('overflowWrap'), (value, key) => ({
-        name: className('', key, 'overflowWrap'),
-        variants: overflowWrapVariants
-    }));
+    const overflowWrap = map(style('overflowWrap'), (value, key) => className('', key, 'overflowWrap'));
 
-    const wordBreakVariants = variants('wordBreak')?.toString();
-    const wordBreak = map(style('wordBreak'), (value, key) => ({
-        name: className('', key, 'workBreak'),
-        variants: wordBreakVariants
-    }));
+    const wordBreak = map(style('wordBreak'), (value, key) => className('', key, 'workBreak'));
 
-    const colorVariants = variants('color')?.toString();
-    const color = map(style('color'), (value, key) => ({
-        name: className('text', key, 'color'),
-        variants: colorVariants
-    }));
+    const color = map(style('color'), (value, key) => className('text', key, 'color'));
 
-    const backgroundAttachmentVariants = variants('backgroundAttachment')?.toString();
-    const backgroundAttachment = map(style('backgroundAttachment'), (value, key) => ({
-        name: className('bg', key, 'backgroundAttachment'),
-        variants: backgroundAttachmentVariants
-    }));
+    const backgroundAttachment = map(style('backgroundAttachment'), (value, key) => className('bg', key, 'backgroundAttachment'));
 
-    const backgroundPositionVariants = variants('backgroundPosition')?.toString();
-    const backgroundPosition = map(style('backgroundPosition'), (value, key) => ({
-        name: className('bg', key, 'backgroundPosition'),
-        variants: backgroundPositionVariants
-    }));
+    const backgroundPosition = map(style('backgroundPosition'), (value, key) => className('bg', key, 'backgroundPosition'));
 
-    const backgroundRepeatVariants = variants('backgroundRepeat')?.toString();
-    const backgroundRepeat = map(style('backgroundRepeat'), (value, key) => ({
-        name: className('bg', key, 'backgroundRepeat'),
-        variants: backgroundRepeatVariants
-    }));
+    const backgroundRepeat = map(style('backgroundRepeat'), (value, key) => className('bg', key, 'backgroundRepeat'));
 
-    const backgroundSizeVariants = variants('backgroundSize')?.toString();
-    const backgroundSize = map(style('backgroundSize'), (value, key) => ({
-        name: className('bg', key, 'backgroundSize'),
-        variants: backgroundSizeVariants
-    }));
+    const backgroundSize = map(style('backgroundSize'), (value, key) => className('bg', key, 'backgroundSize'));
 
-    const backgroundColorVariants = variants('backgroundColor')?.toString();
-    const backgroundColor = map(style('backgroundColor'), (value, key) => ({
-        name: className('bg', key, 'backgroundColor'),
-        variants: backgroundColorVariants
-    }));
+    const backgroundColor = map(style('backgroundColor'), (value, key) => className('bg', key, 'backgroundColor'));
 
-    const borderWidthVariants = variants('borderWidth')?.toString();
     const borderWidth = flatMap(style('borderWidth'), (value, key) => [
-        { name: className('border', key, 'borderWidth'), variants: borderWidthVariants },
-        { name: className('border-t', key, 'borderWidth'), variants: borderWidthVariants },
-        { name: className('border-r', key, 'borderWidth'), variants: borderWidthVariants },
-        { name: className('border-b', key, 'borderWidth'), variants: borderWidthVariants },
-        { name: className('border-l', key, 'borderWidth'), variants: borderWidthVariants }
+        className('border', key, 'borderWidth'),
+        className('border-t', key, 'borderWidth'),
+        className('border-r', key, 'borderWidth'),
+        className('border-b', key, 'borderWidth'),
+        className('border-l', key, 'borderWidth'),
     ]);
 
-    const borderColorVariants = variants('borderColor')?.toString();
-    const borderColor = map(style('borderColor'), (value, key) => ({
-        name: className('border', key, 'borderColor'),
-        variants: borderColorVariants
-    }));
+    const borderColor = map(style('borderColor'), (value, key) => className('border', key, 'borderColor'));
 
-    const borderStyleVariants = variants('borderStyle')?.toString();
-    const borderStyle = map(style('borderStyle'), (value, key) => ({
-        name: className('border', key, 'borderStyle'),
-        variants: borderStyleVariants
-    }));
+    const borderStyle = map(style('borderStyle'), (value, key) => className('border', key, 'borderStyle'));
 
-    const borderRadiusVariants = variants('borderRadius')?.toString();
-    const borderRadius = map(style('borderRadius'), (value, key) => ({
-        name: className('rounded', key, 'borderRadius'),
-        variants: borderRadiusVariants
-    }));
+    const borderRadius = map(style('borderRadius'), (value, key) => className('rounded', key, 'borderRadius'));
 
-    const cursorVariants = variants('cursor')?.toString();
-    const cursor = map(style('cursor'), (value, key) => ({
-        name: className('cursor', key, 'cursor'),
-        variants: cursorVariants
-    }));
+    const cursor = map(style('cursor'), (value, key) => className('cursor', key, 'cursor'));
 
-    const outlineVariants = variants('outline')?.toString();
-    const outline = map(style('outline'), (value, key) => ({
-        name: className('outline', key, 'outline'),
-        variants: outlineVariants
-    }));
+    const outline = map(style('outline'), (value, key) => className('outline', key, 'outline'));
 
-    const resizeVariants = variants('resize')?.toString();
-    const resize = map(style('resize'), (value, key) => ({
-        name: className('resize', key, 'resize'),
-        variants: resizeVariants
-    }));
+    const resize = map(style('resize'), (value, key) => className('resize', key, 'resize'));
 
-    const staticClasses = [
-        { name: 'truncate', variants: '' }
-    ];
+    const staticClasses = ['truncate'];
 
     return concat(
         display,
