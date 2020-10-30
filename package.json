@@ -26,7 +26,7 @@
 			"properties": {
 				"riacss.config": {
 					"type": "string",
-					"default": "**/riacss.config.js",
+					"default": "**/{esopcss.config.js,riacss.config.js}",
 					"description": "postcss-tiger-ria配置文件的匹配字符串，Glob Patterns格式"
 				},
 				"riacss.includes": {

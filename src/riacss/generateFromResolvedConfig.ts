@@ -73,6 +73,14 @@ export default function(resolvedConfig: ResolvedConfig): Classes {
 
     const height = map(style('height'), (value, key) => className('h', key, 'height'));
 
+    const minWidth = map(style('minWidth'), (value, key) => className('min-w', key, 'minWidth'));
+
+    const minHeight = map(style('minHeight'), (value, key) => className('min-h', key, 'minHeight'));
+
+    const maxWidth = map(style('maxWidth'), (value, key) => className('max-w', key, 'maxWidth'));
+
+    const maxHeight = map(style('maxHeight'), (value, key) => className('max-h', key, 'maxHeight'));
+
     const fontSize = map(style('fontSize'), (value, key) => className('font', key, 'fontSize'));
 
     const fontWeight = map(style('fontWeight'), (value, key) => className('font', key, 'fontWeight'));
@@ -144,6 +152,10 @@ export default function(resolvedConfig: ResolvedConfig): Classes {
         padding,
         width,
         height,
+        minWidth,
+        minHeight,
+        maxWidth,
+        maxHeight,
         fontSize,
         fontWeight,
         lineHeight,

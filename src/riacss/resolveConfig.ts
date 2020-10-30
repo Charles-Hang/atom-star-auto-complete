@@ -4,6 +4,27 @@ import get from 'lodash/get';
 import toPath from 'lodash/toPath';
 import isFunction from 'lodash/isFunction';
 
+function resolveFunctionKeys(object, theme) {
+    function themeGetter(pathStr, defaultValue) {
+        const path = toPath(pathStr);
+        let index = 0;
+        let val = theme;
+
+        while (val !== undefined && val !== null && index < path.length) {
+            val = val[path[index]];
+            val = isFunction(val) ? val(themeGetter) : val;
+            index += 1;
+        }
+
+        return val === undefined ? defaultValue : val;
+    }
+
+    return Object.keys(object).reduce((resolved, key) => ({
+        ...resolved,
+        [key]: isFunction(object[key]) ? object[key](themeGetter) : object[key],
+    }), {});
+}
+
 function mergeWithExtendProps(merged, extend) {
     return mergeWith(merged, extend, (mergedValue, extendValue) => {
         if (isUndefined(mergedValue)) {
@@ -56,24 +77,12 @@ function mergeExtends(theme, extend) {
 function resolveConfigTheme(configs) {
     const themes = configs.map((config) => get(config, 'theme', {}));
     const { extend, ...mergedTheme } = mergeThemes(themes);
+    const theme = mergeExtends(mergedTheme, extend);
 
-    return mergeExtends(mergedTheme, extend);
+    return resolveFunctionKeys(theme, theme);
 }
 
 function resolveConfigStyle(configs, theme) {
-    function themeGetter(pathStr, defaultValue) {
-        const path = toPath(pathStr);
-        let index = 0;
-        let val = theme;
-
-        while (val !== undefined && val !== null && index < path.length) {
-            val = val[path[index]];
-            val = isFunction(val) ? val(themeGetter) : val;
-            index += 1;
-        }
-
-        return val === undefined ? defaultValue : val;
-    }
     const style = configs
         .map((config) => get(config, 'style', {}))
         .reduce((merged, s) => ({
@@ -81,10 +90,7 @@ function resolveConfigStyle(configs, theme) {
             ...s,
         }));
 
-    return Object.keys(style).reduce((resolved, key) => ({
-        ...resolved,
-        [key]: isFunction(style[key]) ? style[key](themeGetter) : style[key],
-    }), {});
+    return resolveFunctionKeys(style, theme);
 }
 
 export type ResolvedConfig = ReturnType<typeof resolveConfig>;
