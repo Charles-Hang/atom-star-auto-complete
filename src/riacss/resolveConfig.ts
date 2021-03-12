@@ -19,10 +19,13 @@ function resolveFunctionKeys(object, theme) {
         return val === undefined ? defaultValue : val;
     }
 
-    return Object.keys(object).reduce((resolved, key) => ({
-        ...resolved,
-        [key]: isFunction(object[key]) ? object[key](themeGetter) : object[key],
-    }), {});
+    return Object.keys(object).reduce(
+        (resolved, key) => ({
+            ...resolved,
+            [key]: isFunction(object[key]) ? object[key](themeGetter) : object[key]
+        }),
+        {}
+    );
 }
 
 function mergeWithExtendProps(merged, extend) {
@@ -40,19 +43,19 @@ function mergeWithExtendProps(merged, extend) {
 }
 
 function mergeThemes(themes) {
-    const theme = themes.reduce((merged, t) => ({
-        ...merged,
-        ...t,
-    }), {});
-    // 将extend的属性连接为数组形式，备后续使用
-    const extendWithArrayProps = themes.reduce(
-        (merged, { extend }) => mergeWithExtendProps(merged, extend),
-        {},
+    const theme = themes.reduce(
+        (merged, t) => ({
+            ...merged,
+            ...t
+        }),
+        {}
     );
+    // 将extend的属性连接为数组形式，备后续使用
+    const extendWithArrayProps = themes.reduce((merged, { extend }) => mergeWithExtendProps(merged, extend), {});
 
     return {
         ...(({ extend, ...t }) => t)(theme),
-        extend: extendWithArrayProps,
+        extend: extendWithArrayProps
     };
 }
 
@@ -62,14 +65,14 @@ function mergeExtends(theme, extend) {
         if (Object.values(themeValue).every((themeItem) => typeof themeItem === 'object')) {
             const extendWithArrayProps = extendValue.reduce(
                 (merged, extendProp) => mergeWithExtendProps(merged, extendProp),
-                {},
+                {}
             );
             return mergeExtends(themeValue, extendWithArrayProps);
         }
 
         return {
             ...themeValue,
-            ...Object.assign({}, ...extendValue),
+            ...Object.assign({}, ...extendValue)
         };
     });
 }
@@ -87,7 +90,7 @@ function resolveConfigStyle(configs, theme) {
         .map((config) => get(config, 'style', {}))
         .reduce((merged, s) => ({
             ...merged,
-            ...s,
+            ...s
         }));
 
     return resolveFunctionKeys(style, theme);
@@ -101,12 +104,13 @@ export default function resolveConfig(configs: any[]) {
     const style = resolveConfigStyle(configs, theme);
     const config = Object.assign({}, ...configs, {
         theme,
-        style,
+        style
     });
     const getConfigValue = (path: string, defaultValue?) => get(config, path, defaultValue);
 
     return {
         config: getConfigValue,
         style: (path: string, defaultValue?) => getConfigValue(`style.${path}`, defaultValue),
+        plugins: getConfigValue('plugins', [])
     };
 }
