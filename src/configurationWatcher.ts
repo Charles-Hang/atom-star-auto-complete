@@ -1,6 +1,6 @@
 import { workspace, FileSystemWatcher } from 'vscode';
 import getConfig from './utils/getVscodeConfig';
-import generateClasses, { Classes } from './riacss/generateClasses';
+import generateClasses, { Classes } from './atomstarcss/generateClasses';
 
 let configClasses: Classes;
 let includesClasses: Classes;
@@ -21,7 +21,7 @@ export default async function(callback: (classes: Classes) => void) {
 	workspace.onDidChangeConfiguration(async (e) => {
         const { configFilePath, includes } = getConfig();
 
-		if (e.affectsConfiguration('riacss.config')) {
+		if (e.affectsConfiguration('atomstarcss.config')) {
             configClasses = await generateClasses(configFilePath);
             callback(configClasses.concat(includesClasses));
 
@@ -34,7 +34,7 @@ export default async function(callback: (classes: Classes) => void) {
             }, configFilePath);
         }
         
-        if (e.affectsConfiguration('riacss.includes')) {
+        if (e.affectsConfiguration('atomstarcss.includes')) {
             includesClasses = generateIncludesClasses(includes);
             callback(configClasses.concat(includesClasses));
         }

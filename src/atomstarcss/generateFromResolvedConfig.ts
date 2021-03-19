@@ -6,7 +6,7 @@ import parsePlugins from './parsePlugins';
 type ResolvedConfig = import('./resolveConfig').ResolvedConfig;
 type Classes = import('./generateClasses').Classes;
 
-export default function (resolvedConfig: ResolvedConfig): Classes {
+export default function(resolvedConfig: ResolvedConfig): Classes {
     const { style } = resolvedConfig;
 
     const display = map(style('display'), (value, key) => className('', key, 'display'));
@@ -14,7 +14,7 @@ export default function (resolvedConfig: ResolvedConfig): Classes {
     const overflow = flatMap(style('overflow'), (value, key) => [
         className('overflow', key, 'overflow'),
         className('overflow-x', key, 'overflow'),
-        className('overflow-y', key, 'overflow')
+        className('overflow-y', key, 'overflow'),
     ]);
 
     const position = map(style('position'), (value, key) => className('', key, 'position'));
@@ -23,7 +23,7 @@ export default function (resolvedConfig: ResolvedConfig): Classes {
         className('top', key, 'positionSpacing'),
         className('right', key, 'positionSpacing'),
         className('bottom', key, 'positionSpacing'),
-        className('left', key, 'positionSpacing')
+        className('left', key, 'positionSpacing'),
     ]);
 
     const visibility = map(style('visibility'), (value, key) => className('', key, 'visibility'));
@@ -57,7 +57,7 @@ export default function (resolvedConfig: ResolvedConfig): Classes {
         className('mt', key, 'margin'),
         className('mr', key, 'margin'),
         className('mb', key, 'margin'),
-        className('ml', key, 'margin')
+        className('ml', key, 'margin'),
     ]);
 
     const padding = flatMap(style('padding'), (value, key) => [
@@ -67,7 +67,7 @@ export default function (resolvedConfig: ResolvedConfig): Classes {
         className('pt', key, 'padding'),
         className('pr', key, 'padding'),
         className('pb', key, 'padding'),
-        className('pl', key, 'padding')
+        className('pl', key, 'padding'),
     ]);
 
     const width = map(style('width'), (value, key) => className('w', key, 'width'));
@@ -100,13 +100,9 @@ export default function (resolvedConfig: ResolvedConfig): Classes {
 
     const color = map(style('color'), (value, key) => className('text', key, 'color'));
 
-    const backgroundAttachment = map(style('backgroundAttachment'), (value, key) =>
-        className('bg', key, 'backgroundAttachment')
-    );
+    const backgroundAttachment = map(style('backgroundAttachment'), (value, key) => className('bg', key, 'backgroundAttachment'));
 
-    const backgroundPosition = map(style('backgroundPosition'), (value, key) =>
-        className('bg', key, 'backgroundPosition')
-    );
+    const backgroundPosition = map(style('backgroundPosition'), (value, key) => className('bg', key, 'backgroundPosition'));
 
     const backgroundRepeat = map(style('backgroundRepeat'), (value, key) => className('bg', key, 'backgroundRepeat'));
 
@@ -119,7 +115,7 @@ export default function (resolvedConfig: ResolvedConfig): Classes {
         className('border-t', key, 'borderWidth'),
         className('border-r', key, 'borderWidth'),
         className('border-b', key, 'borderWidth'),
-        className('border-l', key, 'borderWidth')
+        className('border-l', key, 'borderWidth'),
     ]);
 
     const borderColor = map(style('borderColor'), (value, key) => className('border', key, 'borderColor'));
@@ -195,7 +191,7 @@ function className(classPrefix, key, defaultPrefix) {
     }
 
     if (key === '-default') {
-        return `${classPrefix || defaultPrefix}-default`;
+        return `${classPrefix}-default`;
     }
 
     if (!classPrefix) {

@@ -3,7 +3,7 @@
 import { languages, Range, Position, CompletionItem, CompletionItemKind, ExtensionContext } from 'vscode';
 import configurationWatcher from './configurationWatcher';
 import completionConfig from './completionConfig';
-import { Classes } from './riacss/generateClasses';
+import { Classes } from './atomstarcss/generateClasses';
 
 const triggerCharacters = ['"', "'", ' ', '`'];
 let classes: Classes = [];

@@ -17,6 +17,6 @@ export default async function(filePath: string) {
 
         return config;
     } catch (error) {
-        console.log('获取riacss配置错误', error);
+        console.log('获取atomstarcss配置错误', error);
     }
 }

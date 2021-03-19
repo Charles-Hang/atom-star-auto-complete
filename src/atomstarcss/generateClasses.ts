@@ -1,4 +1,4 @@
-import getRiacssConfig from '../utils/getRiacssConfig';
+import getAtomstarcssConfig from '../utils/getAtomstarcssConfig';
 import defaultConfig from './defaultConfig';
 import resolveConfig from './resolveConfig';
 import generateFromResolvedConfig from './generateFromResolvedConfig';
@@ -8,15 +8,15 @@ export type Classes = string[];
 const defaultResolvedConfig = resolveConfig([defaultConfig]);
 
 export default async function generateClasses(configFilePath?: string) {
-    let riacssConfig: any;
+    let atomstarcssConfig: any;
 
     if (configFilePath) {
-        riacssConfig = await getRiacssConfig(configFilePath);
+        atomstarcssConfig = await getAtomstarcssConfig(configFilePath);
     }
 
-    if (!riacssConfig) {
+    if (!atomstarcssConfig) {
         return generateFromResolvedConfig(defaultResolvedConfig);
     }
 
-    return generateFromResolvedConfig(resolveConfig([defaultConfig, riacssConfig]));
+    return generateFromResolvedConfig(resolveConfig([defaultConfig, atomstarcssConfig]));
 }

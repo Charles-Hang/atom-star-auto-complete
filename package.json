@@ -1,12 +1,13 @@
 {
-    "name": "ria-css-autocomplete-vscode",
-    "displayName": "ria css autocomplete vscode",
-    "description": "ria css autocomplete",
-    "version": "0.0.8",
+    "name": "atom-star-auto-complete",
+    "displayName": "atom star auto complete",
+    "description": "atom star css auto complete plugin",
+    "version": "0.1.0",
+	"repository": "https://github.com/Charles-Hang/atom-star-auto-complete",
     "engines": {
         "vscode": "^1.42.0"
     },
-    "publisher": "tiger-hswx",
+    "publisher": "hswxing",
     "categories": [
         "Other"
     ],
@@ -22,14 +23,14 @@
     ],
     "contributes": {
         "configuration": {
-            "title": "Ria css autocomplete",
+            "title": "Atom star auto complete",
             "properties": {
-                "riacss.config": {
+                "atomstarcss.config": {
                     "type": "string",
-                    "default": "**/{esopcss.config.js,riacss.config.js}",
-                    "description": "postcss-tiger-ria配置文件的匹配字符串，Glob Patterns格式"
+                    "default": "**/atomstarcss.config.js",
+                    "description": "postcss-atom-star配置文件的匹配字符串，Glob Patterns格式"
                 },
-                "riacss.includes": {
+                "atomstarcss.includes": {
                     "type": "string",
                     "default": "",
                     "description": "需要额外加入补全提示的css类名，逗号分隔"

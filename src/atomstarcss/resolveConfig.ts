@@ -19,13 +19,10 @@ function resolveFunctionKeys(object, theme) {
         return val === undefined ? defaultValue : val;
     }
 
-    return Object.keys(object).reduce(
-        (resolved, key) => ({
-            ...resolved,
-            [key]: isFunction(object[key]) ? object[key](themeGetter) : object[key]
-        }),
-        {}
-    );
+    return Object.keys(object).reduce((resolved, key) => ({
+        ...resolved,
+        [key]: isFunction(object[key]) ? object[key](themeGetter) : object[key],
+    }), {});
 }
 
 function mergeWithExtendProps(merged, extend) {
@@ -43,19 +40,19 @@ function mergeWithExtendProps(merged, extend) {
 }
 
 function mergeThemes(themes) {
-    const theme = themes.reduce(
-        (merged, t) => ({
-            ...merged,
-            ...t
-        }),
-        {}
-    );
+    const theme = themes.reduce((merged, t) => ({
+        ...merged,
+        ...t,
+    }), {});
     // 将extend的属性连接为数组形式，备后续使用
-    const extendWithArrayProps = themes.reduce((merged, { extend }) => mergeWithExtendProps(merged, extend), {});
+    const extendWithArrayProps = themes.reduce(
+        (merged, { extend }) => mergeWithExtendProps(merged, extend),
+        {},
+    );
 
     return {
         ...(({ extend, ...t }) => t)(theme),
-        extend: extendWithArrayProps
+        extend: extendWithArrayProps,
     };
 }
 
@@ -65,14 +62,14 @@ function mergeExtends(theme, extend) {
         if (Object.values(themeValue).every((themeItem) => typeof themeItem === 'object')) {
             const extendWithArrayProps = extendValue.reduce(
                 (merged, extendProp) => mergeWithExtendProps(merged, extendProp),
-                {}
+                {},
             );
             return mergeExtends(themeValue, extendWithArrayProps);
         }
 
         return {
             ...themeValue,
-            ...Object.assign({}, ...extendValue)
+            ...Object.assign({}, ...extendValue),
         };
     });
 }
@@ -90,7 +87,7 @@ function resolveConfigStyle(configs, theme) {
         .map((config) => get(config, 'style', {}))
         .reduce((merged, s) => ({
             ...merged,
-            ...s
+            ...s,
         }));
 
     return resolveFunctionKeys(style, theme);
@@ -98,13 +95,13 @@ function resolveConfigStyle(configs, theme) {
 
 export type ResolvedConfig = ReturnType<typeof resolveConfig>;
 
-// 来自于postcss-tiger-ria插件中的相同方法，返回略作调整
+// 来自于postcss-atom-star插件中的相同方法，返回略作调整
 export default function resolveConfig(configs: any[]) {
     const theme = resolveConfigTheme(configs);
     const style = resolveConfigStyle(configs, theme);
     const config = Object.assign({}, ...configs, {
         theme,
-        style
+        style,
     });
     const getConfigValue = (path: string, defaultValue?) => get(config, path, defaultValue);
 
